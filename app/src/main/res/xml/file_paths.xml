@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <external-path path="Android/data/com.example.mp3merge/" name="files_root" />
+    <external-path path="." name="external_storage_root" />
+    <external-path path="." name="external_storage_root" />
+    <path>
+
+        <root-path name="root_path" path="."/>
+
+    </path>
+</paths>
