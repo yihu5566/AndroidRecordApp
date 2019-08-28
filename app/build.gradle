@@ -8,12 +8,16 @@ android {
     compileSdkVersion 29
     buildToolsVersion "29.0.1"
     defaultConfig {
-        applicationId "com.example.mp3merge"
+        applicationId "com.recordapp.record"
         minSdkVersion 15
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        ndk {
+            //APP的build.gradle设置支持的SO库架构
+            abiFilters 'armeabi', 'armeabi-v7a', 'x86'
+        }
     }
     buildTypes {
         release {
@@ -24,6 +28,14 @@ android {
     compileOptions {
         sourceCompatibility = '1.8'
         targetCompatibility = '1.8'
+    }
+
+    /*将so文件放置libs文件夹时,需要配置,防止main/jniLibs时一定不能配置 */
+    sourceSets {
+        main {
+            jni.srcDirs = []//disable automatic ndk-build call
+            jniLibs.srcDirs = ['libs']
+        }
     }
 }
 
@@ -37,5 +49,7 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0-beta03'
+    implementation project(path: ':mp3library')
+
 
 }

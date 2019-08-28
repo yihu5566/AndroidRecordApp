@@ -1,4 +1,4 @@
-package com.example.record_app;
+package com.recordapp.record;
 
 import android.content.Context;
 import android.view.LayoutInflater;

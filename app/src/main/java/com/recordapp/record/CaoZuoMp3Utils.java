@@ -1,4 +1,4 @@
-package com.example.record_app;
+package com.recordapp.record;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -218,11 +218,11 @@ public class CaoZuoMp3Utils {
         String fenLiData2 = fenLiData(path1);
         File file = new File(fenLiData);
         File file1 = new File(fenLiData2);
-        String luJing = "/storage/emulated/0/" + "super_start/合并/";
+        String luJing = "/storage/emulated/0/" + "super_start/";
         File f = new File(luJing);
         f.mkdirs();
         //生成处理后的文件
-        File file2 = new File(luJing + name + "(HH合并).mp3");
+        File file2 = new File(luJing + name + "(合并).mp3");
         FileInputStream in = new FileInputStream(file);
         FileOutputStream out = new FileOutputStream(file2);
         byte bs[] = new byte[1024 * 4];

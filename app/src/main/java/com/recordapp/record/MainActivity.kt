@@ -1,4 +1,4 @@
-package com.example.record_app
+package com.recordapp.record
 
 import android.app.Activity
 import android.content.Intent
@@ -14,11 +14,13 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
 import java.util.ArrayList
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener {
+
     var permissionList: ArrayList<String> = ArrayList()
     /**存放音频文件列表 */
     private var recordFiles: ArrayList<String>? = null
@@ -26,14 +28,21 @@ class MainActivity : AppCompatActivity() {
     private var sdcardExit: Boolean = false
     var myRecAudioDir: String? = Environment.getExternalStorageDirectory().path + "/super_start"
     var myRecyclerAdapter: MyRecyclerAdapter? = null
+    var isMp3: Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        sfl_main_root.setOnRefreshListener(this)
         // 判断sd Card是否插入
         sdcardExit = Environment.getExternalStorageState() == android.os.Environment.MEDIA_MOUNTED
         btn_merge.setOnClickListener(View.OnClickListener {
-            startActivityForResult(Intent(this, RecordViewActivity::class.java), 1001)
+            if (isMp3) {
+                startActivityForResult(Intent(this, RecordAudioRecordViewActivity::class.java), 1001)
+            } else {
+                startActivityForResult(Intent(this, RecordViewActivity::class.java), 1001)
+            }
+
         })
         getPermission(
             this,
@@ -42,8 +51,15 @@ class MainActivity : AppCompatActivity() {
             android.Manifest.permission.RECORD_AUDIO
 
         )
-
+        recordFiles = ArrayList<String>()
         getRecordFiles()
+        if (recordFiles!!.size == 0) {
+            rlv_main.visibility = View.GONE
+            tv_not_data.visibility=View.VISIBLE
+        } else {
+            rlv_main.visibility = View.VISIBLE
+            tv_not_data.visibility=View.GONE
+        }
         myRecyclerAdapter = MyRecyclerAdapter(this, recordFiles)
         myRecyclerAdapter!!.setListener { path -> openFile(File(path)) }
         rlv_main.layoutManager = LinearLayoutManager(this)
@@ -61,9 +77,20 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onRefresh() {
+        getRecordFiles()
+        if (recordFiles!!.size == 0) {
+            rlv_main.visibility = View.GONE
+            tv_not_data.visibility=View.VISIBLE
+        } else {
+            rlv_main.visibility = View.VISIBLE
+            tv_not_data.visibility=View.GONE
+        }
+        myRecyclerAdapter!!.notifyDataSetChanged()
+    }
+
     private fun getRecordFiles() {
-        // TODO Auto-generated method stub
-        recordFiles = ArrayList<String>()
+        recordFiles!!.clear()
         if (sdcardExit) {
             val files = File(myRecAudioDir).listFiles()
             if (files != null) {
@@ -80,6 +107,7 @@ class MainActivity : AppCompatActivity() {
 
                     }
                 }
+                sfl_main_root.isRefreshing = false
             }
         }
 

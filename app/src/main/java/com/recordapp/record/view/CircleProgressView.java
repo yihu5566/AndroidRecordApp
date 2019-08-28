@@ -1,7 +1,6 @@
-package com.example.record_app.view;
+package com.recordapp.record.view;
 
 
-import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -12,7 +11,7 @@ import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.View;
 import androidx.annotation.Nullable;
-import com.example.record_app.R;
+import com.recordapp.record.R;
 
 /**
  * 普通环形进度条

@@ -1,4 +1,4 @@
-package com.example.record_app
+package com.recordapp.record
 
 import android.app.Activity
 import android.content.Intent
@@ -11,7 +11,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import com.example.record_app.view.CircleProgressView
+import com.recordapp.record.view.CircleProgressView
 import kotlinx.android.synthetic.main.activity_record_view.*
 import java.io.File
 import java.io.FileInputStream
