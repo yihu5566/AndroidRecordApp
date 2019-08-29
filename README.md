@@ -7,4 +7,4 @@
 2. 支持暂停和继续录音
 
 ##效果图：
-[效果图](/image/ezgif.com-video-to-gif.gif)
+![效果图](/image/ezgif.com-video-to-gif.gif)
